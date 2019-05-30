@@ -3,8 +3,8 @@
   color: #444;
 }
 .selected{
-  background-color: #593196;
-  color: #fff;
+  background-color: #593196 !important;
+  color: #fff !important;
 }
 .selected-completed{
   text-decoration: line-through;

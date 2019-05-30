@@ -1,4 +1,4 @@
-<div *ngIf="user != undefined">
+<div *ngIf="gotTasks">
   <div class="row">
     <div class="col">
       <div class="row">
@@ -52,7 +52,7 @@
         <div class="col" *ngIf="!showSearch">
           <app-task-list [tasks]="user.tasks" [userId]="user._id"></app-task-list>
         </div>
-        <div class="col" *ngIf="showSearch">
+        <div class="col" *ngIf="showSearch && !filterTasks">
           <app-task-list
             *ngIf="searchResults.length != 0"
             [tasks]="searchResults"
@@ -60,10 +60,27 @@
           </app-task-list>
           <h2 class="text-primary" *ngIf="searchResults.length == 0">No Tasks Fetched!</h2>
         </div>
+        <div class="col" *ngIf="showSearch && filterTasks">
+          <br>        
+          <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-5 col-sm-12" *ngIf="selectedTask != undefined">
       <app-view-task [task]="selectedTask"></app-view-task>
+    </div>
+  </div>
+</div>
+<div *ngIf="!gotTasks">
+  <br>
+  <br>
+  <div class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
 </div>

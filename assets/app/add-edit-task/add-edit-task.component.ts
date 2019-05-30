@@ -25,6 +25,7 @@ export class AddEditTaskComponent implements OnInit {
   showImageAdd = false;
   image: any;
   respObject: any;
+  updatingTask = false;
   // errorMsg = '';
   // errorHeading = '';
   // errorPresent = false;
@@ -55,7 +56,9 @@ export class AddEditTaskComponent implements OnInit {
                   'heading': new FormControl(this.task.heading, [Validators.required]),
                   'content': new FormControl(this.task.content, []),
                 });
-                this.imgSrc = 'data:' + this.task.image.contentType + ';base64,' + this.task.image.image;
+                if(this.task.image != undefined){
+                  this.imgSrc = 'data:' + this.task.image.contentType + ';base64,' + this.task.image.image;
+                }
               },
               (error: Response) => {
                 console.log(error);
@@ -85,6 +88,7 @@ export class AddEditTaskComponent implements OnInit {
       false,
       this.userId
     );
+    this.updatingTask = true;
     if (this.functionality === 'Add') {
 
       this.appService.addTask(newTask)
@@ -92,9 +96,11 @@ export class AddEditTaskComponent implements OnInit {
           (response: Response) => {
             console.log(response);
             this.location.back();
+            this.updatingTask = false;
           },
           (error: Response) => {
             console.log(error);
+            this.updatingTask = false;
           }
         );
     }
@@ -104,9 +110,11 @@ export class AddEditTaskComponent implements OnInit {
           (response: Response) => {
             console.log(response);
             this.location.back();
+            this.updatingTask = false;
           },
           (error: Response) => {
             console.log(error);
+            this.updatingTask = false;
           }
         );
     }

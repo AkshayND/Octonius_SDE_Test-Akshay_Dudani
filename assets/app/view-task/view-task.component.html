@@ -56,20 +56,24 @@
         </div>
       </div>
 
-      <div style="margin: 10px;" *ngIf="task.image == undefined">
+      <div style="margin: 10px;" *ngIf="task.image == undefined && !updatingTask">
         <div *ngIf="showImageAdd">
           <input type="file" name="myImage" ng2FileSelect [uploader]="uploader" />
           <br>
           <br>
+          <div class="progress" *ngIf="uploader != undefined && uploader.isUploading" style="">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+          </div>
+          <br *ngIf="uploader != undefined && uploader.isUploading"><br *ngIf="uploader != undefined && uploader.isUploading">
           <button type="button" class="btn btn-block btn-primary"
               (click)="uploader.uploadAll()"
-              [disabled]="!uploader.getNotUploadedItems().length" >
+              [disabled]="uploader != undefined && uploader.isUploading">
             Upload an Image
           </button>
           <button
               type="button"
               class="btn btn-lg btn-block btn-dark"
-              (click)="toggleAddImage()">
+              (click)="toggleAddImage()" [disabled]="uploader != undefined && !uploader.isUploading">
             <i class="fas fa-window-close"></i> Cancel
           </button>
         </div>
@@ -81,7 +85,13 @@
           <i class="fas fa-paperclip"></i> Attach Image
         </button>
       </div>
-
+      <div class="text-center" *ngIf="updatingTask">
+        <div>
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
       <div class="card" *ngIf="task.image != undefined">
         <div class="card-body">
           <img [src]="imgSrc" class="img-fluid" alt="new">

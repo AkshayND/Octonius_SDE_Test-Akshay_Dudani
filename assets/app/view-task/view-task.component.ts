@@ -21,6 +21,7 @@ export class ViewTaskComponent implements OnInit, OnChanges {
   uploader: FileUploader;
   imgSrc: string;
   URL: string;
+  updatingTask = false;
 
   constructor(private appService: AppService, private router: Router) { }
 
@@ -83,12 +84,14 @@ export class ViewTaskComponent implements OnInit, OnChanges {
       this.uploader.onCompleteItem = (item: any, response: any, status: any, headers:any) => {
           console.log("ImageUpload:uploaded:", item, status);
           if(status === 201){
+            this.updatingTask = true
             this.appService.getTask(this.task.heading, this.task.user).subscribe(
               (response: Response) => {
                 console.log(response);
                 this.task = response['object'];
                 this.imgSrc = 'data:' + this.task.image.contentType + ';base64,' + this.task.image.image;
                 this.appService.passUpdatedTask(this.task);
+                this.updatingTask = false;
               },
               (error: Response) => {
                 console.log(error);

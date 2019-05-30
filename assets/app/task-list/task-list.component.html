@@ -23,6 +23,7 @@
         <button
             type="button"
             class="btn btn-block btn-danger"
+            [disabled]="removingTask"
             (click)="removeTask(task)">
           <i class="fas fa-trash-alt"></i>
         </button>
@@ -40,7 +41,14 @@
       </div>
     </div>
   </li>
-  <li class="" style="list-style: none;" [style.padding]=" showAddForm? '12px 15px' : '12px 0px' ">
+  <li *ngIf="addingTask || removingTask || updatingTask" style="list-style: none; padding: 12px 15px;">
+    <div>
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </li>
+  <li class="" *ngIf="!addingTask" style="list-style: none;" [style.padding]=" showAddForm? '12px 15px' : '12px 0px' ">
     <form [formGroup]="addTaskForm" *ngIf="showAddForm">
       <div class="row">
         <div class="form-group col-7" style="padding: 0px 0px">
@@ -50,6 +58,12 @@
               *ngIf="addTaskForm.controls['heading'].errors?.required && addTaskForm.controls['heading'].dirty"
               style="color: red;">
             Task Heading is Required Field!
+          </div>
+          <br *ngIf="checkingAvailability">
+          <div *ngIf="checkingAvailability">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
           <div
             class="help-block"
@@ -62,7 +76,7 @@
           <button
               type="submit"
               class="btn btn-block btn-primary"
-              [disabled]="addTaskForm.invalid"
+              [disabled]="addTaskForm.invalid || checkingAvailability"
               (click)="saveAdd()">
             Add Task
           </button>

@@ -20,6 +20,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   showSearch = false;
   searchForm: FormGroup;
   searchResults: Task[];
+  gotTasks = false;
+  filterTasks = false;
 
   constructor(
     private appService: AppService,
@@ -41,6 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                   (response: Response) => {
                     console.log(response);
                     this.user.tasks = response['object'];
+                    this.gotTasks = true;
                     this.searchResults = response['object'];
                     this.selectTaskSubscription = this.appService.selectedTask.subscribe(
                       (task: Task) => {
@@ -85,13 +88,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
       this.searchForm.controls['searchText'].valueChanges.subscribe(
         (searchText: string) => {
+          this.filterTasks = true;
           this.appService.searchTasks(this.user._id, searchText).subscribe(
             (response: Response) => {
               console.log(response);
               this.searchResults = response['object'];
+              this.filterTasks = false;
             },
             (error: Response) => {
               console.log(error);
+              this.filterTasks = false;
             }
           )
         }
