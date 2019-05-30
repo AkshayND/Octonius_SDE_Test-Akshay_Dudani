@@ -1,0 +1,54 @@
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <h1 style="text-align: center">{{functionality}} Task</h1>
+    <br>
+    <form *ngIf="addEditTaskForm != undefined" (ngSubmit)="addSaveTask()" [formGroup]="addEditTaskForm">
+      <input
+        type="text"
+        name="heading"
+        class="form-control"
+        placeholder="Task Heading"
+        formControlName="heading">
+      <div
+          class="help-block"
+          *ngIf="addEditTaskForm.controls['heading'].errors?.required && addEditTaskForm.controls['heading'].dirty"
+          style="color: red;">
+        Task Heading is Required Field!
+      </div>
+      <br>
+      <textarea
+        *ngIf="addEditTaskForm.controls['heading'].value != ''"
+        name="content"
+        class="form-control"
+        placeholder="Content"
+        formControlName="content"></textarea>
+      <br *ngIf="addEditTaskForm.controls['heading'].value != ''">
+      <!-- <div class="alert alert-danger" *ngIf="errorPresent">
+        <h3 class="alert-heading">{{errorHeading}}</h3>
+        {{errorMsg}}
+      </div> -->
+      <button
+          type="submit"
+          class="btn btn-large btn-block btn-primary"
+          [disabled]="!addEditTaskForm.valid">
+        {{functionality == 'Add'? 'Add': 'Save'}} Task
+      </button>
+      <br>
+      <button
+          type="button"
+          class="btn btn-large btn-block btn-dark"
+          (click)="back()">
+        Cancel
+      </button>
+    </form>
+
+    <div *ngIf="addEditTaskForm == undefined">
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,52 @@
+
+/* You can add global styles to this file, and also import other style files */
+.form-control{
+  border-radius: 20px;
+  border: 1px solid #593196;
+  color: #593196;
+}
+.form-control::-webkit-input-placeholder{
+    color: #5924aa91;
+}
+
+.form-control.ng-valid:not(.ng-pristine){
+  border-radius: 20px;
+  border: 1px solid #17141F;
+  color: #17141F;
+}
+
+.form-control:focus{
+  background-color: rgba(100,65,164,0.3);
+  color: #593196;
+}
+
+.btn{
+  border-radius: 20px;
+}
+
+.btn-dark:hover{
+  border: 1px solid #17141F;
+  color: #17141F;
+  background-color: #fff;
+}
+
+.list-group-item{
+  background-color: #fff;
+  color: #593196;
+  margin-bottom: 0px;
+  border-bottom: 1px solid rgba(0,0,0,.125);
+  cursor: pointer;
+}
+
+.list-group-item:hover{
+  background-color: rgba(163, 163, 163, 0.308);
+  color: #593196;
+}
+
+
+.btn-primary:hover{
+  border: 1px solid #593196;
+  color: #593196;
+  background-color: #fff;
+}
+

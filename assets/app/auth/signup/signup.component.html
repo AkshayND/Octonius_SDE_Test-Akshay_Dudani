@@ -1,0 +1,99 @@
+<div class="row justify-content-md-center">
+  <div class="col-md-6" *ngIf="!accountCreated">
+    <h1 style="text-align: center">Signup</h1>
+    <br>
+    <form (ngSubmit)="onSignup()" [formGroup]="signupForm">
+      <input
+        type="text"
+        name="name"
+        class="form-control"
+        placeholder="Full Name"
+        formControlName="name">
+      <div
+          class="help-block"
+          *ngIf="signupForm.controls['name'].errors?.required && signupForm.controls['name'].dirty"
+          style="color: red;">
+        Name is Required Field!
+      </div>
+      <br>
+      <input
+        type="email"
+        name="email"
+        class="form-control"
+        placeholder="Email"
+        formControlName="email">
+      <div
+          class="help-block"
+          *ngIf="signupForm.controls['email'].errors?.required && signupForm.controls['email'].dirty"
+          style="color: red;">
+        Email is Required Field!
+      </div>
+      <div
+          class="help-block"
+          *ngIf="signupForm.controls['email'].errors?.email && signupForm.controls['email'].dirty"
+          style="color: red;">
+        Please Enter Valid Email!
+      </div>
+      <br>
+      <input
+        type="text"
+        name="username"
+        class="form-control"
+        placeholder="Username"
+        formControlName="username">
+      <div
+          class="help-block"
+          *ngIf="signupForm.controls['username'].errors?.required && signupForm.controls['username'].dirty"
+          style="color: red;">
+        Username is Required Field!
+      </div>
+      <div
+          class="help-block"
+          *ngIf="signupForm.controls['username'].errors?.minlength && signupForm.controls['username'].dirty"
+          style="color: red;">
+        Username should be of min 8 length!
+      </div>
+      <div
+        class="help-block"
+        *ngIf="signupForm.controls['username'].errors?.usernameIsInvalid && signupForm.controls['username'].dirty"
+        style="color: red;">
+        <b>{{signupForm.controls['username'].value}}</b> is taken! Kindly Enter Unique Username!
+      </div>
+      <br>
+      <input
+        type="password"
+        name="password"
+        class="form-control"
+        placeholder="Password"
+        formControlName="password">
+      <div
+          class="help-block"
+          *ngIf="signupForm.controls['password'].errors?.required && signupForm.controls['password'].dirty"
+          style="color: red;">
+        Password is Required Field!
+      </div>
+      <div
+          class="help-block"
+          *ngIf="signupForm.controls['password'].errors?.minlength && signupForm.controls['password'].dirty"
+          style="color: red;">
+        Password should be of min 8 length!
+      </div>
+      <br>
+      <div class="alert alert-danger" *ngIf="errorPresent">
+        <h3 class="alert-heading">{{errorHeading}}</h3>
+        {{errorMsg}}
+      </div>
+      <br>
+      <button
+          type="submit"
+          class="btn btn-large btn-block btn-primary"
+          [disabled]="!signupForm.valid">
+        Create Account
+      </button>
+    </form>
+  </div>
+	<div class="col-md-6" *ngIf="accountCreated">
+		<h1 class="text-success">User Account has been successfully created.</h1>
+		<a class="btn btn-block btn-dark" routerLink='/login'>Login</a>
+	</div>
+</div>

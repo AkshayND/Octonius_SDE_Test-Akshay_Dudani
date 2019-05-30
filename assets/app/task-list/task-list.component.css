@@ -1,0 +1,12 @@
+.completed{
+  text-decoration: line-through;
+  color: #444;
+}
+.selected{
+  background-color: #593196;
+  color: #fff;
+}
+.selected-completed{
+  text-decoration: line-through;
+  color: #fff;
+}

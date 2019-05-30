@@ -1,0 +1,55 @@
+<div class="row justify-content-md-center">
+	<div class="col-md-6">
+		<h1 style="text-align: center">Login</h1>
+		<br>
+		<form (ngSubmit)="login()" [formGroup]="loginForm">
+			<input
+				type="text"
+				name="username"
+				class="form-control"
+				placeholder="Username"
+        formControlName="username">
+      <div
+          class="help-block"
+          *ngIf="loginForm.controls['username'].errors?.required && loginForm.controls['username'].dirty"
+          style="color: red;">
+        Username is Required Field!
+      </div>
+			<br>
+			<input
+				type="password"
+				name="password"
+				class="form-control"
+				placeholder="Password"
+        formControlName="password">
+      <div
+          class="help-block"
+          *ngIf="loginForm.controls['password'].errors?.required && loginForm.controls['password'].dirty"
+          style="color: red;">
+        Password is Required Field!
+      </div>
+      <br>
+			<div class="alert alert-danger" *ngIf="errorPresent">
+				<h3 class="alert-heading">{{errorHeading}}</h3>
+				{{errorMsg}}
+			</div>
+			<br>
+      <button
+          type="submit"
+          class="btn btn-large btn-block btn-primary"
+          [disabled]="!loginForm.valid">
+        Login
+      </button>
+			<br>
+			<h3 style="text-align: center">Not a User?</h3>
+			<br>
+      <button
+          type="button"
+          class="btn btn-large btn-block btn-dark"
+          (click)="createAccount()">
+        Create an Account
+      </button>
+		</form>
+
+	</div>
+</div>

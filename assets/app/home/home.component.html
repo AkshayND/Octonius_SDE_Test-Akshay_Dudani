@@ -1,0 +1,69 @@
+<div *ngIf="user != undefined">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Tasks...</h1>
+          <h5 *ngIf="user.tasks.length != 0">Double click on task to view Details...</h5>
+          <h3 class="text-primary" *ngIf="user.tasks.length == 0">
+            Add new Task to display here!
+          </h3>
+        </div>
+        <div class="col-md-4" *ngIf="user.tasks.length == 0">
+          <button
+              type="button"
+              class="btn btn-large btn-block btn-dark"
+              (click)="addTask()">
+            <i class="fas fa-plus"></i> Add New Task
+          </button>
+        </div>
+        <div class="col-md-4 align-self-center" *ngIf="user.tasks.length != 0">
+          <button
+              type="button"
+              class="btn btn-large btn-block btn-secondary"
+              (click)="toggleShowSearch()"
+              *ngIf="!showSearch">
+            <i class="fas fa-search"></i> Search
+          </button>
+          <div *ngIf="showSearch">
+            <div class="row">
+              <div class="col-9" style="padding: 2px">
+                <form [formGroup]="searchForm">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="searchText"
+                    placeholder="What are you looking for?">
+                </form>
+              </div>
+              <div class="col-3" style="padding: 2px">
+                <button
+                    type="button"
+                    class="btn btn-large btn-dark"
+                    (click)="toggleShowSearch()">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" *ngIf="!showSearch">
+          <app-task-list [tasks]="user.tasks" [userId]="user._id"></app-task-list>
+        </div>
+        <div class="col" *ngIf="showSearch">
+          <app-task-list
+            *ngIf="searchResults.length != 0"
+            [tasks]="searchResults"
+            [userId]="user._id">
+          </app-task-list>
+          <h2 class="text-primary" *ngIf="searchResults.length == 0">No Tasks Fetched!</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 col-sm-12" *ngIf="selectedTask != undefined">
+      <app-view-task [task]="selectedTask"></app-view-task>
+    </div>
+  </div>
+</div>

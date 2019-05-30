@@ -1,0 +1,102 @@
+<div class="app-view-task" >
+  <div class="row h-75">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title"
+              [style.text-decoration]="task.completed? 'line-through': null"
+              (dblclick)="completeTask()">
+            {{task.heading}}
+          </h1>
+        </div>
+      </div>
+
+      <div style="margin: 10px;" *ngIf="task.content == ''">
+        <form (ngSubmit)="saveContent()" *ngIf="showContentAdd" [formGroup]="editForm">
+          <textarea
+            name="content"
+            class="form-control"
+            placeholder="Content goes here..."
+            formControlName="content"></textarea>
+          <div
+              class="help-block"
+              *ngIf="editForm.controls['content'].errors?.required && editForm.controls['content'].dirty"
+              style="color: red;">
+            Content is Required Field!
+          </div>
+          <br>
+          <button
+              type="submit"
+              class="btn btn-lg btn-block btn-primary"
+              [disabled]="editForm.invalid">
+            <i class="fas fa-save"></i> Save Content
+          </button>
+          <button
+              type="button"
+              class="btn btn-lg btn-block btn-dark"
+              (click)="toggleShowAddContent()">
+            <i class="fas fa-window-close"></i> Cancel
+          </button>
+        </form>
+        <button
+            type="button"
+            class="btn btn-lg btn-block btn-dark"
+            (click)="toggleShowAddContent()"
+            *ngIf="!showContentAdd">
+          <i class="fas fa-plus"></i> Add Content
+        </button>
+      </div>
+
+      <div class="card" *ngIf="task.content != ''">
+        <div class="card-body">
+          <h5 class="card-title"
+              (dblclick)="completeTask()">
+            {{task.content}}
+          </h5>
+        </div>
+      </div>
+
+      <div style="margin: 10px;" *ngIf="task.image == undefined">
+        <div *ngIf="showImageAdd">
+          <input type="file" name="myImage" ng2FileSelect [uploader]="uploader" />
+          <br>
+          <br>
+          <button type="button" class="btn btn-block btn-primary"
+              (click)="uploader.uploadAll()"
+              [disabled]="!uploader.getNotUploadedItems().length" >
+            Upload an Image
+          </button>
+          <button
+              type="button"
+              class="btn btn-lg btn-block btn-dark"
+              (click)="toggleAddImage()">
+            <i class="fas fa-window-close"></i> Cancel
+          </button>
+        </div>
+        <button
+            type="button"
+            class="btn btn-lg btn-block btn-info"
+            (click)="toggleAddImage()"
+            *ngIf="!showImageAdd">
+          <i class="fas fa-paperclip"></i> Attach Image
+        </button>
+      </div>
+
+      <div class="card" *ngIf="task.image != undefined">
+        <div class="card-body">
+          <img [src]="imgSrc" class="img-fluid" alt="new">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-end h-25">
+    <div class="col">
+      <button
+          type="button"
+          class="btn btn-lg btn-block btn-primary"
+          (click)="editTask()">
+        <i class="fas fa-edit"></i> Edit Task
+      </button>
+    </div>
+  </div>
+</div>
